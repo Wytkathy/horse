@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Egg Yolk Pastry — 蛋黄酥</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C41E3A;
+    --red-deep: #8B0000;
+    --gold: #D4A847;
+    --gold-light: #F0D68A;
+    --cream: #FFF8F0;
+    --dark: #1A0808;
+    --ink: #2C1810;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #0D0505;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .poster {
+    width: 800px;
+    max-width: 100%;
+    background: var(--dark);
+    border: 3px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Corner ornaments */
+  .poster::before,
+  .poster::after {
+    content: '◆';
+    position: absolute;
+    color: var(--gold);
+    font-size: 1.2rem;
+    z-index: 10;
+  }
+  .poster::before { top: 12px; left: 16px; }
+  .poster::after { top: 12px; right: 16px; }
+
+  .corner-bl, .corner-br {
+    position: absolute;
+    color: var(--gold);
+    font-size: 1.2rem;
+    z-index: 10;
+  }
+  .corner-bl { bottom: 12px; left: 16px; }
+  .corner-br { bottom: 12px; right: 16px; }
+
+  /* Inner border */
+  .inner-border {
+    margin: 20px;
+    border: 1px solid rgba(212,168,71,0.3);
+    padding: 2.5rem 2rem;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .header-ornament {
+    color: var(--gold);
+    font-size: 0.9rem;
+    letter-spacing: 1rem;
+    opacity: 0.5;
+  }
+
+  .header-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1.2;
+    text-shadow: 0 0 40px rgba(212,168,71,0.2);
+    margin: 0.3rem 0;
+  }
+
+  .header-en {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cream);
+    letter-spacing: 0.15em;
+    opacity: 0.8;
+  }
+
+  .header-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-top: 0.6rem;
+  }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,71,0.4), transparent);
+  }
+
+  .divider-icon {
+    color: var(--gold);
+    font-size: 1rem;
+    opacity: 0.6;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: var(--cream);
+    opacity: 0.8;
+    line-height: 1.7;
+    margin-bottom: 0.6rem;
+  }
+
+  /* ===== WHAT IS IT ===== */
+  .intro-box {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .intro-emoji {
+    font-size: 5rem;
+    filter: drop-shadow(0 0 20px rgba(212,168,71,0.3));
+    flex-shrink: 0;
+  }
+
+  .intro-text {
+    flex: 1;
+  }
+
+  /* ===== INGREDIENTS ===== */
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .ingredient {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,168,71,0.15);
+    border-radius: 12px;
+    padding: 1.2rem 0.8rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .ingredient:hover {
+    border-color: var(--gold);
+    background: rgba(212,168,71,0.08);
+    transform: translateY(-2px);
+  }
+
+  .ingredient .emoji { font-size: 2.2rem; margin-bottom: 0.5rem; }
+
+  .ingredient .name-en {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--cream);
+    margin-bottom: 0.2rem;
+  }
+
+  .ingredient .name-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.9rem;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  /* ===== STEPS ===== */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+    padding-bottom: 1.2rem;
+  }
+
+  .step:last-child { padding-bottom: 0; }
+
+  .step-marker {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--red-deep));
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .step:not(:last-child) .step-marker::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: calc(100% + 0.4rem);
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .step-content {
+    flex: 1;
+    padding-top: 0.35rem;
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--cream);
+    margin-bottom: 0.15rem;
+  }
+
+  .step-title .cn {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--gold);
+    opacity: 0.7;
+    font-size: 0.85rem;
+    margin-left: 0.4rem;
+  }
+
+  .step-desc {
+    font-size: 0.82rem;
+    color: var(--cream);
+    opacity: 0.55;
+    font-weight: 300;
+  }
+
+  /* ===== CULTURE ===== */
+  .culture-box {
+    background: linear-gradient(135deg, rgba(196,30,58,0.1), rgba(212,168,71,0.06));
+    border: 1px solid rgba(212,168,71,0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .culture-box::before {
+    content: '月';
+    position: absolute;
+    right: -5px;
+    bottom: -15px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(212,168,71,0.04);
+  }
+
+  .culture-item {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+  }
+
+  .culture-item:last-child { margin-bottom: 0; }
+
+  .culture-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+  .culture-text {
+    font-size: 0.9rem;
+    color: var(--cream);
+    opacity: 0.8;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .culture-text strong { color: var(--gold); font-weight: 600; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(212,168,71,0.15);
+  }
+
+  .footer-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .footer-en {
+    font-size: 0.8rem;
+    color: var(--cream);
+    opacity: 0.4;
+    letter-spacing: 0.15em;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    body { padding: 0.5rem; }
+    .inner-border { margin: 12px; padding: 1.5rem 1rem; }
+    .header-cn { font-size: 3rem; }
+    .header-en { font-size: 1.2rem; }
+    .intro-box { flex-direction: column; text-align: center; }
+    .intro-emoji { font-size: 3.5rem; }
+    .ingredients-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="poster">
+  <span class="corner-bl">◆</span>
+  <span class="corner-br">◆</span>
+
+  <div class="inner-border">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-ornament">❖ ❖ ❖</div>
+      <div class="header-cn">蛋黄酥</div>
+      <div class="header-en">Egg Yolk Pastry</div>
+      <div class="header-sub">A Beloved Chinese Delicacy</div>
+    </div>
+
+    <!-- WHAT IS IT -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">壹</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="section-label">What Is It</div>
+    <div class="intro-box">
+      <div class="intro-emoji">🥮</div>
+      <div class="intro-text">
+        <h2>A Golden Treasure Inside Flaky Layers</h2>
+        <p>Egg yolk pastry (蛋黄酥, <em>dàn huáng sū</em>) is a beloved Chinese pastry featuring a <strong style="color:var(--gold)">golden salted egg yolk</strong> wrapped in sweet red bean paste, encased in dozens of <strong style="color:var(--gold)">paper-thin flaky layers</strong>. Each bite is a perfect balance of salty, sweet, and buttery — a masterpiece of Chinese baking.</p>
+      </div>
+    </div>
+
+    <!-- INGREDIENTS -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">贰</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="section-label">Key Ingredients</div>
+    <h2>What Goes Inside</h2>
+
+    <div class="ingredients-grid">
+      <div class="ingredient">
+        <div class="emoji">🧈</div>
+        <div class="name-en">Flaky Pastry</div>
+        <div class="name-cn">酥皮</div>
+      </div>
+      <div class="ingredient">
+        <div class="emoji">🫘</div>
+        <div class="name-en">Red Bean Paste</div>
+        <div class="name-cn">红豆沙</div>
+      </div>
+      <div class="ingredient">
+        <div class="emoji">🥚</div>
+        <div class="name-en">Salted Egg Yolk</div>
+        <div class="name-cn">咸蛋黄</div>
+      </div>
+      <div class="ingredient">
+        <div class="emoji">🫗</div>
+        <div class="name-en">Black Sesame</div>
+        <div class="name-cn">黑芝麻</div>
+      </div>
+    </div>
+
+    <!-- HOW IT'S MADE -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">叁</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="section-label">How It's Made</div>
+    <h2>The Art of Layering</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-marker">1</div>
+        <div class="step-content">
+          <div class="step-title">Make the Doughs <span class="cn">制作水油皮与油酥</span></div>
+          <div class="step-desc">Prepare two doughs: a water-oil dough and a pure butter-flour pastry for the flaky layers.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-marker">2</div>
+        <div class="step-content">
+          <div class="step-title">Wrap & Roll <span class="cn">包酥擀卷</span></div>
+          <div class="step-desc">Wrap the pastry dough inside the water dough, then roll and fold repeatedly to create dozens of thin layers.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-marker">3</div>
+        <div class="step-content">
+          <div class="step-title">Fill with Treasure <span class="cn">包入馅料</span></div>
+          <div class="step-desc">Place a salted egg yolk in the center of a red bean paste ball, then wrap it all inside the layered dough.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-marker">4</div>
+        <div class="step-content">
+          <div class="step-title">Brush & Sprinkle <span class="cn">刷蛋液撒芝麻</span></div>
+          <div class="step-desc">Brush with egg wash for a golden sheen, then top with black sesame seeds.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-marker">5</div>
+        <div class="step-content">
+          <div class="step-title">Bake to Perfection <span class="cn">烘烤至金黄</span></div>
+          <div class="step-desc">Bake at 180°C (350°F) for 25 minutes until golden and beautifully cracked, revealing the flaky layers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CULTURE -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">肆</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="section-label">Cultural Significance</div>
+    <h2>More Than Just a Pastry</h2>
+
+    <div class="culture-box">
+      <div class="culture-item">
+        <span class="culture-icon">🌕</span>
+        <div class="culture-text"><strong>Moon Festival Favorite:</strong> Egg yolk pastries are especially popular during the Mid-Autumn Festival (中秋节). The round golden yolk symbolizes the full moon — a symbol of reunion and togetherness.</div>
+      </div>
+      <div class="culture-item">
+        <span class="culture-icon">🏠</span>
+        <div class="culture-text"><strong>Family Reunion:</strong> Sharing egg yolk pastries is a way to express love and longing for family. The act of baking them at home has become a cherished tradition across generations.</div>
+      </div>
+      <div class="culture-item">
+        <span class="culture-icon">🎁</span>
+        <div class="culture-text"><strong>The Perfect Gift:</strong> Beautifully boxed egg yolk pastries are one of the most popular gifts during Chinese festivals — a gesture of warmth, respect, and good wishes.</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-cn">一口酥香，满心团圆</div>
+      <div class="footer-en">One bite of flaky sweetness, a heart full of togetherness</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
